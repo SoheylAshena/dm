@@ -1,3 +1,9 @@
+/* ╭─────────────────────────────────────────────────────────────────────────╮
+   │                            ✦  S O H E Y L   ✦                           │
+   │                                                                         │
+   │     • Keeps things small • prefers clarity • avoids late-night hacks    │
+   ╰─────────────────────────────────────────────────────────────────────────╯ */
+
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
@@ -15,7 +21,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fa">
+    <html lang="en">
       <body className={inter.className}>{children}</body>
     </html>
   );

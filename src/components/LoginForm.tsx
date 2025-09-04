@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import { isValidIranianMobile } from "@/lib/authUtils";
@@ -15,11 +15,15 @@ export default function LoginForm() {
   const [error, setError] = useState("");
   const router = useRouter();
 
+  const mobileInput = useRef<HTMLInputElement | null>(null);
+
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!isValidIranianMobile(telephone)) {
       setError("Invalid number format");
+      mobileInput.current?.focus();
+
       return;
     }
     setLoading(true);
@@ -52,47 +56,48 @@ export default function LoginForm() {
   };
 
   return (
-    <div className={cn("flex flex-col gap-6 w-sm p-5")}>
-      <Card>
-        <CardHeader>
-          <CardTitle>Login to your account</CardTitle>
-          <CardDescription>Enter your phone number below to login to your account</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={onSubmit}>
-            <div className="flex flex-col gap-6">
-              <div className="grid gap-3">
-                <Label htmlFor="phone">Phone number</Label>
-                <Input
-                  className={cn(error && "ring-red-600 ring-1")}
-                  id="phone"
-                  type="tel"
-                  placeholder="09*********"
-                  value={telephone}
-                  onChange={(e) => {
-                    setTelephone(e.target.value);
-                    setError("");
-                  }}
-                  required
-                />
-                <p
-                  className={cn(
-                    "text-xs opacity-0 transition-all h-2 -translate-y-1",
-                    error && "text-red-500 opacity-100 translate-y-0"
-                  )}
-                >
-                  {error}
-                </p>
-              </div>
-              <div className="flex flex-col gap-3">
-                <Button type="submit" className="w-full" disabled={loading}>
-                  {loading ? "Loading..." : "Login"}
-                </Button>
-              </div>
-            </div>
-          </form>
-        </CardContent>
-      </Card>
-    </div>
+    <Card className="w-sm">
+      <CardHeader>
+        <CardTitle className="text-2xl mb-5">Login to your account</CardTitle>
+        <CardDescription>Enter your phone number below to login to your account</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <form className="gap-3 flex flex-col" aria-label="login form" onSubmit={onSubmit}>
+          <Label htmlFor="phone">Phone number</Label>
+          <Input
+            ref={mobileInput}
+            className={cn(error && "ring-red-600 ring-1")}
+            id="phone"
+            type="tel"
+            placeholder="09*********"
+            value={telephone}
+            aria-invalid={!!error}
+            aria-describedby="phone-error"
+            onChange={(e) => {
+              setTelephone(e.target.value);
+              setError("");
+            }}
+            required
+            autoFocus
+          />
+
+          <p
+            role="alert"
+            aria-live="polite"
+            id="phone-error"
+            className={cn(
+              "text-xs opacity-0 transition-all h-5 -translate-y-1",
+              error && "text-red-500 opacity-100 translate-y-0"
+            )}
+          >
+            {error}
+          </p>
+
+          <Button type="submit" className="w-full" disabled={loading}>
+            {loading ? "Loading..." : "Login"}
+          </Button>
+        </form>
+      </CardContent>
+    </Card>
   );
 }

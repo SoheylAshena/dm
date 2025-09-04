@@ -1,20 +1,13 @@
-"use client";
-
+import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "./ui/card";
 
 import { isValidIranianMobile } from "@/lib/authUtils";
 import { cn } from "@/lib/utils";
-import { useState } from "react";
+
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
 
 export default function LoginForm() {
   const [telephone, setTelephone] = useState("");
@@ -63,9 +56,7 @@ export default function LoginForm() {
       <Card>
         <CardHeader>
           <CardTitle>Login to your account</CardTitle>
-          <CardDescription>
-            Enter your phone number below to login to your account
-          </CardDescription>
+          <CardDescription>Enter your phone number below to login to your account</CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={onSubmit}>

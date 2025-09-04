@@ -8,8 +8,10 @@ import LoginForm from "@/components/LoginForm";
 export default function Home() {
   const router = useRouter();
 
-  // Checks to see if a user data is available
-  // If available, It will navigate to dashboard
+  /*╒═══════════════════════════════════════════════════════════════════════╕
+        Checks to see if a user data is available
+        If yes, It will navigate to dashboard   
+    ╘═══════════════════════════════════════════════════════════════════════╛*/
   useEffect(() => {
     const exsitingUser = localStorage.getItem("user");
     if (exsitingUser) {

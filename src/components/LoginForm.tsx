@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import { isValidIranianMobile } from "@/lib/authUtils";
@@ -54,6 +54,17 @@ export default function LoginForm() {
     localStorage.setItem("user", JSON.stringify(userData));
     router.push("/dashboard");
   };
+
+  /*╒═══════════════════════════════════════════════════════════════════════╕
+        Checks to see if a user data is available
+        If yes, It will navigate to dashboard   
+    ╘═══════════════════════════════════════════════════════════════════════╛*/
+  useEffect(() => {
+    const exsitingUser = localStorage.getItem("user");
+    if (exsitingUser) {
+      router.push("/dashboard");
+    }
+  }, []);
 
   return (
     <Card className="w-sm">
